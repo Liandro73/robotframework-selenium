@@ -3,6 +3,8 @@ Library                 SeleniumLibrary
 
 *** Variables ***
 ${TIMEOUT}                           10
+${URL}                               https://www.amazon.com.br
+${MENU_ELETRONICOS}                  //a[text()='Eletrônicos']
 
 *** Keywords ***
 Setup Selenium
@@ -34,3 +36,19 @@ Abrir o navegador
 Fechar o navegador
     Capture Page Screenshot
     Close Browser
+
+Acessar a home page do site Amazon.com.br
+    Go To                            ${URL}
+    Wait Until Element Is Visible    ${MENU_ELETRONICOS}
+
+Entrar no menu "Eletrônicos"
+    Click Element                    ${MENU_ELETRONICOS}
+
+Verificar se aparece a frase "${TEXTO_PAGINA}"
+    Wait Until Element Is Visible    //h1[text()='${TEXTO_PAGINA}']
+
+Verificar se o título da página fica "${TITULO_PAGINA}"
+    Title Should Be                  ${TITULO_PAGINA}
+
+Verificar se aparece a categoria "${NOME_CATEGORIA}"
+    Element Should Be Visible        //a[@aria-label='${NOME_CATEGORIA}']
