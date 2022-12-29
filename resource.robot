@@ -52,3 +52,12 @@ Verificar se o título da página fica "${TITULO_PAGINA}"
 
 Verificar se aparece a categoria "${NOME_CATEGORIA}"
     Element Should Be Visible        //a[@aria-label='${NOME_CATEGORIA}']
+
+Digitar o nome de produto "${PRODUTO}" no campo pesquisa
+    Input Text                       twotabsearchtextbox    ${PRODUTO}
+
+Clicar no botão pesquisa
+    Click Element                    nav-search-submit-button
+
+Verificar o resultado da pesquisa se está listando o produto "${PRODUTO}"
+    Wait Until Element Is Visible    //span[contains(., '${PRODUTO}')]
