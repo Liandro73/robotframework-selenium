@@ -20,3 +20,18 @@ Caso de Teste 02 - Pesquisa de Produto
     Dado que estou na home page da Amazon.com.br
     Quando pesquisar pelo produto "Playstation 5"
     Então um produto da linha "Console PlayStation®5" deve ser mostrado na página
+
+Caso de Teste 03 - Adicionar Produto no Carrinho
+    [Documentation]    Esse teste verifica a adição de um produto no carrinho de compras
+    [Tags]             regressivo    adicionar_carrinho
+    Dado que estou na home page da Amazon.com.br
+    Quando adicionar o produto "Playstation 5" no carrinho
+    Então o produto "Playstation 5" deve ser mostrado no carrinho
+ 
+Caso de Teste 04 - Remover Produto do Carrinho
+    [Documentation]    Esse teste verifica a remoção de um produto no carrinho de compras
+    [Tags]             regressivo    remover_carrinho
+    Dado que estou na home page da Amazon.com.br
+    Quando adicionar o produto "Playstation 5" no carrinho
+    E remover o produto "Playstation 5" do carrinho
+    Então o carrinho deve ficar vazio

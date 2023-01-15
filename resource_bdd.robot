@@ -5,6 +5,9 @@ Library                 SeleniumLibrary
 ${TIMEOUT}                           10
 ${URL}                               https://www.amazon.com.br
 ${MENU_ELETRONICOS}                  //a[text()='Eletrônicos']
+${BOTAO_ADICIONAR_CARRINHO}          add-to-cart-button
+${BOTAO_EXCLUIR_CARRINHO}            //input[@value='Excluir']
+${BOTAO_IR_CARRINHO}                 //a[@data-csa-c-type='button'][contains(., 'Ir para o carrinho')]
 
 *** Keywords ***
 Setup Selenium
@@ -61,3 +64,23 @@ Quando pesquisar pelo produto "${PRODUTO}"
 
 Então um produto da linha "${PRODUTO}" deve ser mostrado na página
     Wait Until Element Is Visible    //span[contains(., '${PRODUTO}')]
+
+Quando adicionar o produto "Playstation 5" no carrinho
+    Input Text                       twotabsearchtextbox    Playstation 5
+    Click Element                    nav-search-submit-button
+    Wait Until Element Is Visible    //span[contains(., 'Console PlayStation®5')]
+    Click Element                    //div[@data-index='2']
+    Wait Until Element Is Visible    ${BOTAO_ADICIONAR_CARRINHO}  
+    Click Element                    ${BOTAO_ADICIONAR_CARRINHO}
+
+Então o produto "Playstation 5" deve ser mostrado no carrinho
+    Wait Until Element Is Visible    //span[contains(., 'Adicionado ao carrinho')]
+
+E remover o produto "Playstation 5" do carrinho
+    Wait Until Element Is Visible    ${BOTAO_IR_CARRINHO}
+    Click Element                    ${BOTAO_IR_CARRINHO}
+    Wait Until Element Is Visible    ${BOTAO_EXCLUIR_CARRINHO}        
+    Click Element                    ${BOTAO_EXCLUIR_CARRINHO}
+
+Então o carrinho deve ficar vazio
+    Element Should Be Visible        //h1[contains(., 'Seu carrinho de compras da Amazon está vazio.')]
