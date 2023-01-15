@@ -5,6 +5,9 @@ Library                 SeleniumLibrary
 ${TIMEOUT}                           10
 ${URL}                               https://www.amazon.com.br
 ${MENU_ELETRONICOS}                  //a[text()='Eletrônicos']
+${BOTAO_ADICIONAR_CARRINHO}          add-to-cart-button
+${BOTAO_EXCLUIR_CARRINHO}            //input[@value='Excluir']
+${BOTAO_IR_CARRINHO}                 //a[@data-csa-c-type='button'][contains(., 'Ir para o carrinho')]
 
 *** Keywords ***
 Setup Selenium
@@ -61,3 +64,20 @@ Clicar no botão pesquisa
 
 Verificar o resultado da pesquisa se está listando o produto "${PRODUTO}"
     Wait Until Element Is Visible    //span[contains(., '${PRODUTO}')]
+
+Adicionar o produto "Playstation 5" no carrinho
+    Click Element                    //div[@data-index='2']
+    Wait Until Element Is Visible    ${BOTAO_ADICIONAR_CARRINHO}  
+    Click Element                    ${BOTAO_ADICIONAR_CARRINHO}
+
+Verificar se o produto "Playstation 5" foi adicionado com sucesso
+    Wait Until Element Is Visible    //span[contains(., 'Adicionado ao carrinho')]
+
+Remover o produto "Playstation 5" do carrinho
+    Wait Until Element Is Visible    ${BOTAO_IR_CARRINHO}
+    Click Element                    ${BOTAO_IR_CARRINHO}
+    Wait Until Element Is Visible    ${BOTAO_EXCLUIR_CARRINHO}        
+    Click Element                    ${BOTAO_EXCLUIR_CARRINHO}
+
+Verificar se o carrinho fica vazio
+    Element Should Be Visible        //h1[contains(., 'Seu carrinho de compras da Amazon está vazio.')]
